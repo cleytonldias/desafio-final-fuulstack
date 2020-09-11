@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import * as api from './api/apiService.js';
 import LancamentosControl from './components/LancamentosControl.js';
 import { Header } from './components/Header.js';
+import { ModalLancamento } from './components/ModalLancamento.js';
 
 export default function App() {
   const [selectedYearMonth, setSelectedYearMonth] = useState('');
   const [lancamentos, setlancamentos] = useState([]);
+  const [selectedLancamento, setSelectedLancamento] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   /*useEffect(() => {
@@ -26,14 +28,28 @@ export default function App() {
     getLancamentos();
   }, []);
 
-  const handleDelete = () => {
-    console.log('Delete');
+  const handleDelete = async (id) => {
+    const isDeleted = await api.remove(id);
+    if (isDeleted) {
+      const filteredLancamentos = lancamentos.filter((lancamento) => {
+        return lancamento._id !== id;
+      });
+      setlancamentos(filteredLancamentos);
+    }
   };
-  const handlePersit = () => {
-    console.log('Persist');
+  const handlePersit = async (lancamento) => {
+    setSelectedLancamento(lancamento);
+    setIsModalOpen(true);
   };
 
-  console.log(lancamentos);
+  const handlePersitData = (formData) => {
+    console.log(formData);
+    setIsModalOpen(false);
+  };
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       {lancamentos.length > 0 && (
@@ -42,8 +58,15 @@ export default function App() {
           <LancamentosControl
             lancamentos={lancamentos}
             onDelete={handleDelete}
-            onPersit={handlePersit}
+            onPersist={handlePersit}
           />
+          {isModalOpen && (
+            <ModalLancamento
+              onSave={handlePersitData}
+              onClose={handleClose}
+              selectedLancamento={selectedLancamento}
+            />
+          )}
         </div>
       )}
       {lancamentos.length == 0 && <p>Carregando Lançamentos...</p>}

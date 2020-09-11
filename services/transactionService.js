@@ -107,12 +107,12 @@ const findByPeriod = async (req, res) => {
 
 const findAndRemove = async (req, res) => {
   try {
-    const id = req.body._id;
+    const id = req.params.id;
     const data = await TransactionModel.findByIdAndRemove({ _id: id });
     if (!data) {
       res.status(404).send('Nao foi encontrado o registro para excluir');
     } else {
-      res.send(data);
+      res.send(true);
     }
   } catch (error) {
     res

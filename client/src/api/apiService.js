@@ -12,24 +12,24 @@ async function findByPeriod(periodo) {
       };
     })
     .sort((a, b) => {
-      return a.day - b.day, a.type - b.type;
+      return a.day - b.day;
     });
   return lancamentos;
 }
 
 async function create(lancamento) {
   const response = await axios.post(API_URL, lancamento);
-  return response.data();
+  return response.data;
 }
 
 async function update(lancamento) {
   const response = await axios.put(API_URL, lancamento);
-  return response.data();
+  return response.data;
 }
 
-async function remove(lancamento) {
-  const response = await axios.delete(API_URL, lancamento);
-  return response.data();
+async function remove(id) {
+  const response = await axios.delete(`${API_URL}/${id}`);
+  return response;
 }
 
 export { findByPeriod, create, update, remove };

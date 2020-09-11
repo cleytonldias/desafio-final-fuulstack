@@ -7,8 +7,12 @@ export default function LancamentosControl({
   onPersist,
 }) {
   const handleActionClick = (id, type) => {
-    console.log(id);
-    console.log(type);
+    const lancamento = lancamentos.find((lancamento) => lancamento._id === id);
+    if (type === 'delete') {
+      onDelete(id);
+    }
+
+    onPersist(lancamento);
   };
   return (
     <table className="striped">
@@ -27,6 +31,7 @@ export default function LancamentosControl({
                 <br />
                 {lancamento.description}
               </td>
+              <td>{lancamento.value}</td>
               <td>
                 <Action
                   onActionClick={handleActionClick}

@@ -5,7 +5,11 @@ export default function Action({ id, type, onActionClick }) {
     onActionClick(id, type);
   };
   return (
-    <span className="material-icons" onClick={handleIconClick}>
+    <span
+      style={{ cursor: 'pointer' }}
+      className="material-icons"
+      onClick={handleIconClick}
+    >
       {type}
     </span>
   );
