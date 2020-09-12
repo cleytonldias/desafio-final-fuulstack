@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { InputReadOnly } from './InputReadOnly';
+import { formatNumber } from '../helpers/formatHelpers.js';
 
 export function Header({ lancamentos }) {
   const sumByType = (type) => {
@@ -18,11 +19,29 @@ export function Header({ lancamentos }) {
   const saldo = receita - despesa;
 
   return (
-    <div>
+    <div style={styles.flexRow}>
       <InputReadOnly titulo="Lançamentos:" valor={lancamentos.length} />
-      <InputReadOnly titulo="Receitas:" valor={receita} />
-      <InputReadOnly titulo="Despesas:" valor={despesa} />
-      <InputReadOnly titulo="Saldo:" valor={saldo} />
+      <InputReadOnly titulo="Receitas:" valor={formatNumber(receita)} />
+      <InputReadOnly titulo="Despesas:" valor={formatNumber(despesa)} />
+      <InputReadOnly titulo="Saldo:" valor={formatNumber(saldo)} />
     </div>
   );
 }
+
+const styles = {
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItens: 'center',
+    flexwrap: 'wrap',
+    border: '1px solid lightgray',
+    padding: '5px',
+    justifyContent: 'space-between',
+    marginBottom: '40px',
+  },
+
+  title: {
+    fontSize: '1.3rem',
+    fontWight: 'bold',
+  },
+};

@@ -12,7 +12,10 @@ async function findByPeriod(periodo) {
       };
     })
     .sort((a, b) => {
-      return a.day - b.day;
+      if (a.day > b.day) return 1;
+      if (a.day < b.day) return -1;
+      if (a.type > b.type) return -1;
+      if (a.type < b.type) return 1;
     });
   return lancamentos;
 }
